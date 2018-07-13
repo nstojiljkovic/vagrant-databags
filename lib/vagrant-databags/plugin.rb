@@ -8,13 +8,12 @@ module VagrantPlugins
 
       [:machine_action_up, :machine_action_reload, :machine_action_provision].each do |action|
         action_hook(:databags_provision, action) do |hook|
-          # hook.after Vagrant::Action::Builtin::ConfigValidate, Action::LoadDataBags
-          hook.before Vagrant::Action::Builtin::Provision, Action::LoadDataBags
+          hook.before(Vagrant::Action::Builtin::Provision, Action::LoadDataBags)
+          hook.after(Vagrant::Action::Builtin::Provision, Action::PersistDataBags)
         end
       end
 
       action_hook(:databags_provision, :provisioner_run) do |hook|
-        hook.before :run_provisioner, Action::PersistDataBags
         hook.after :run_provisioner, Action::CleanDataBags
       end
 

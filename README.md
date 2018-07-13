@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
   # Hash of map lambda's per data bag.
   # Each data bag needs a lambda with 2 parameters: items and env and should return the new hash of data bag items
   # Parameter items is a hash of items (per item's id) 
-  # Parameter env is vagrant-lifecycle plugin's middleware environment hash with various interesting keys:
+  # Parameter env is vagrant-databags plugin's middleware environment hash with various interesting keys:
   # * env[:ui] is an instance of ::Vagrant::UI::Interface
   # * env[:machine] is an instance of ::Vagrant::Machine etc.
   config.databags.map = {
