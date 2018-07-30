@@ -27,7 +27,7 @@ module VagrantPlugins
         machine_data_bags = get_machine_data_bags(machine, provisioner_type)
         data_bags_path.each do |data_bag_path|
           if data_bag_path[0] == :host
-            data_bags_root_path = ::File.join(machine.env.root_path, data_bag_path[1])
+            data_bags_root_path = ::File.absolute_path(data_bag_path[1], machine.env.root_path)
             find_all_object_dirs(data_bags_root_path).each do |data_bag_name|
               find_all_objects(::File.join(data_bags_root_path, data_bag_name)).each do |item_file_name|
                 item = object_from_json_file(::File.join(data_bags_root_path, data_bag_name, item_file_name))
