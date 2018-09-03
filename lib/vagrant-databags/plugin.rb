@@ -8,7 +8,11 @@ module VagrantPlugins
 
       [:machine_action_up, :machine_action_reload, :machine_action_provision].each do |action|
         action_hook(:databags_provision, action) do |hook|
-          hook.before(Vagrant::Action::Builtin::Provision, Action::LoadDataBags)
+          if ::VagrantPlugins.const_defined?(:Lifecycle) && (Vagrant.has_plugin? 'vagrant-lifecycle')
+            hook.before(VagrantPlugins::Lifecycle::Action::EvalLifecycleRunList, Action::LoadDataBags)
+          else
+            hook.before(Vagrant::Action::Builtin::Provision, Action::LoadDataBags)
+          end
           hook.after(Vagrant::Action::Builtin::Provision, Action::PersistDataBags)
         end
       end
@@ -18,8 +22,8 @@ module VagrantPlugins
       end
 
       action_hook(:databags_provision, :machine_action_destroy) do |hook|
-          hook.before Vagrant::Action::Builtin::ProvisionerCleanup, Action::DestroyDataBags
-          # hook.before Vagrant::Action::Builtin::DestroyConfirm, Plugin.provisioner_destroy
+        hook.before Vagrant::Action::Builtin::ProvisionerCleanup, Action::DestroyDataBags
+        # hook.before Vagrant::Action::Builtin::DestroyConfirm, Plugin.provisioner_destroy
       end
 
       config(:databags) do
