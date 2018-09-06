@@ -33,7 +33,7 @@ GIT
 PATH
   remote: .
   specs:
-    vagrant-databags (0.1.3)
+    vagrant-databags (0.1.4)
 
 GEM
   remote: https://rubygems.org/

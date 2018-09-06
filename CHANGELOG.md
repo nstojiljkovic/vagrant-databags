@@ -1,5 +1,9 @@
 # vagrant-databags Changelog
 
+## 0.1.4
+
+Fix hook execution order on vagrant 2.1.3 (and higher) with vagrant-managed-servers plugin installed.
+
 ## 0.1.3
 
 Fix hook execution order on vagrant 2.1.3 (and higher) with vagrant-lifecycle plugin installed.

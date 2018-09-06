@@ -10,9 +10,9 @@ module VagrantPlugins
         action_hook(:databags_provision, action) do |hook|
           if ::VagrantPlugins.const_defined?(:Lifecycle) && (Vagrant.has_plugin? 'vagrant-lifecycle')
             hook.before(VagrantPlugins::Lifecycle::Action::EvalLifecycleRunList, Action::LoadDataBags)
-          else
-            hook.before(Vagrant::Action::Builtin::Provision, Action::LoadDataBags)
           end
+          # LoadDataBags action internally skips double processing
+          hook.before(Vagrant::Action::Builtin::Provision, Action::LoadDataBags)
           hook.after(Vagrant::Action::Builtin::Provision, Action::PersistDataBags)
         end
       end
